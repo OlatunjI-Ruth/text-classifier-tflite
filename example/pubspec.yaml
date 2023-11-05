@@ -17,13 +17,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-  tflite_flutter_plus:
-    # When depending on this package from a real application you should use:
-    #   tflite_flutter_plus: ^x.y.z
-    # See https://dart.dev/tools/pub/dependencies#version-constraints
-    # The example app is bundled with the plugin so we use a path dependency on
-    # the parent directory to use the current plugin's version.
-    path: ../
+  tflite_flutter: ^0.10.3
+
+
+#    # When depending on this package from a real application you should use:
+#    #   tflite_flutter_plus: ^x.y.z
+#    # See https://dart.dev/tools/pub/dependencies#version-constraints
+#    # The example app is bundled with the plugin so we use a path dependency on
+#    # the parent directory to use the current plugin's version.
+#    path: ../
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -55,6 +57,8 @@ flutter:
   assets:
     - assets/
     - assets/test/
+    - assets/clive_converted_model.tflite
+#    - assets/text_classification.tflite
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

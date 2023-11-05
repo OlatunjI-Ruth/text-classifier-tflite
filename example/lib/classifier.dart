@@ -1,13 +1,8 @@
 import 'package:flutter/services.dart';
-
-// Import tflite_flutter
-import 'package:tflite_flutter_plus/tflite_flutter_plus.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+import 'dart:io';
 
 class Classifier {
-  // name of the model file
-  final _modelFile = 'text_classification.tflite';
-  final _vocabFile = 'text_classification_vocab.txt';
-
   // Maximum length of sentence
   final int _sentenceLen = 256;
 
@@ -24,39 +19,291 @@ class Classifier {
     // Load model when the classifier is initialized.
     print("Hello boy, how do you do");
     _loadModel();
-    _loadDictionary();
   }
 
-  void _loadModel() async {
-    // Creating the interpreter using Interpreter.fromAsset
-    _interpreter = await Interpreter.fromAsset(_modelFile);
+  Future<void> _loadModel() async {
+    // print('Loading interpreter options...');
+    // final interpreterOptions = InterpreterOptions();
+    //
+    // // Use XNNPACK Delegate
+    // if (Platform.isAndroid) {
+    //   interpreterOptions.addDelegate(XNNPackDelegate());
+    // }
+    //
+    // // Use Metal Delegate
+    // if (Platform.isIOS) {
+    //   interpreterOptions.addDelegate(GpuDelegate());
+    // }
+
+    _interpreter = await Interpreter.fromAsset(
+      'assets/clive_converted_model.tflite',
+    );
     print('Interpreter loaded successfully');
   }
 
-  void _loadDictionary() async {
-    final vocab = await rootBundle.loadString('assets/$_vocabFile');
-    var dict = <String, int>{};
-    final vocabList = vocab.split('\n');
-    for (var i = 0; i < vocabList.length; i++) {
-      var entry = vocabList[i].trim().split(' ');
-      dict[entry[0]] = int.parse(entry[1]);
-    }
-    _dict = dict;
-    print('Dictionary loaded successfully');
-  }
-
-  List<double> classify(String rawText) {
+  // String rawText
+  List<double> classify() {
     // tokenizeInputText returns List<List<double>>
     // of shape [1, 256].
-    List<List<double>> input = tokenizeInputText(rawText);
+    List<List<double>> input = [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        89.0,
+        9.0
+      ]
+    ];
 
     // output of shape [1,2].
+
     var output = List<double>.filled(2, 0).reshape([1, 2]);
-
-    // The run method will run inference and
-    // store the resulting values in output.
     _interpreter.run(input, output);
-
     return [output[0][0], output[0][1]];
   }
 

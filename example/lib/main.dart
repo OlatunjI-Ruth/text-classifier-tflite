@@ -38,11 +38,11 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               Expanded(
                   child: ListView.builder(
-                    itemCount: _children.length,
-                    itemBuilder: (_, index) {
-                      return _children[index];
-                    },
-                  )),
+                itemCount: _children.length,
+                itemBuilder: (_, index) {
+                  return _children[index];
+                },
+              )),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
                     child: const Text('Classify'),
                     onPressed: () {
                       final text = _controller.text;
-                      final prediction = _classifier.classify(text);
+                      final prediction = _classifier.classify();
                       setState(() {
                         _children.add(Dismissible(
                           key: GlobalKey(),
